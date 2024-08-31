@@ -36,6 +36,15 @@ async function run() {
     const reviewsCollection = client.db('cafeteria-management').collection('reviews')
     const cartsCollection = client.db('cafeteria-management').collection('carts')
 
+    // user related apis
+
+    //get all users
+
+    app.get("/users", async(req, res) => {
+      const result = await usersCollection.find().toArray();
+      res.send(result)
+    })
+
     // store user on database 
 
     app.post('/users', async(req, res) => {
