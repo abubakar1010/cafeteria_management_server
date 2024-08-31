@@ -31,9 +31,24 @@ async function run() {
     await client.connect();
 
 
+    const usersCollection = client.db('cafeteria-management').collection('users')
     const menuCollection = client.db('cafeteria-management').collection('menu')
     const reviewsCollection = client.db('cafeteria-management').collection('reviews')
     const cartsCollection = client.db('cafeteria-management').collection('carts')
+
+    // store user on database 
+
+    app.post('/users', async(req, res) => {
+
+      const user = req.body;
+      
+      const query = {email: user.email}
+      const isExist = await usersCollection.findOne(query)
+      console.log(user, query, isExist);
+      if(isExist) return res.send({message: 'user already exist', insertedId: null})
+      const result = await usersCollection.insertOne(user)
+      res.send(result)
+    })
 
     // find all menu from menu collection
 
@@ -71,7 +86,6 @@ async function run() {
     })
 
     // delete item from cart
-
     app.delete("/carts/:id", async( req, res) => {
       const id = req.params.id;
       const query = {_id: new ObjectId(id)}
