@@ -8,7 +8,7 @@ const port = process.env.PROT || 5000;
 
 app.use(cors())
 app.use(express.json())
-// app.use(cookieParser())
+app.use(cookieParser())
 
 
 
@@ -70,6 +70,20 @@ async function run() {
 
     })
 
+
+    //update user
+
+    app.patch("/users/admin/:id", async(req, res) => {
+      const id = req.params.id;
+      const filter = {_id: new ObjectId(id)}
+      const updatedDocs = {
+        $set:{
+          role: 'admin'
+        }
+      }
+      const result = await usersCollection.updateOne(filter, updatedDocs)
+      res.send(result)
+    })
 
 
     // find all menu from menu collection
