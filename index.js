@@ -59,6 +59,19 @@ async function run() {
       res.send(result)
     })
 
+    // delete users 
+
+    app.delete('/users/:id', async(req, res) => {
+
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)}
+      const result = await cartsCollection.deleteOne(query)
+      res.send(result)
+
+    })
+
+
+
     // find all menu from menu collection
 
     app.get('/menu', async(req, res) => {
