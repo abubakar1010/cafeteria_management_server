@@ -164,6 +164,15 @@ async function run() {
       res.send(result)
     })
 
+    // update menu 
+
+    app.delete("/menu/admin/:id", verifyToken, verifyAdmin, async(req, res) => {
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)}
+      const result = await menuCollection.deleteOne(query)
+      res.send(result)
+    })
+
 
     //find all reviews from reviews collection
 
