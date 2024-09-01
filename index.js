@@ -156,6 +156,14 @@ async function run() {
         res.send(result)
     })
 
+    //insert item on menu
+
+    app.post("/menu", verifyToken, verifyAdmin, async(req, res) => {
+      const data = req.body;
+      const result = await menuCollection.insertOne(data)
+      res.send(result)
+    })
+
 
     //find all reviews from reviews collection
 
